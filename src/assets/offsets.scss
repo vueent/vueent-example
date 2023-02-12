@@ -1,0 +1,53 @@
+@for $i from 1 through 12 {
+  .py_#{$i} {
+    padding-top: #{$i}rem;
+    padding-bottom: #{$i}rem;
+  }
+
+  .px_#{$i} {
+    padding-left: #{$i}rem;
+    padding-right: #{$i}rem;
+  }
+
+  .pt_#{$i} {
+    padding-top: #{$i}rem;
+  }
+
+  .pb_#{$i} {
+    padding-bottom: #{$i}rem;
+  }
+
+  .pl_#{$i} {
+    padding-left: #{$i}rem;
+  }
+
+  .pr_#{$i} {
+    padding-right: #{$i}rem;
+  }
+
+  .my_#{$i} {
+    margin-top: #{$i}rem;
+    margin-bottom: #{$i}rem;
+  }
+
+  .mx_#{$i} {
+    margin-left: #{$i}rem;
+    margin-right: #{$i}rem;
+  }
+
+  .mt_#{$i} {
+    margin-top: #{$i}rem;
+  }
+
+  .mb_#{$i} {
+    margin-bottom: #{$i}rem;
+  }
+
+  .ml_#{$i} {
+    margin-left: #{$i}rem;
+  }
+
+  .mr_#{$i} {
+    margin-right: #{$i}rem;
+  }
+}

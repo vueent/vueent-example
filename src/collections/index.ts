@@ -1,0 +1,1 @@
+export { HumansCollection } from './humans';
