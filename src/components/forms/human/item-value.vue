@@ -2,14 +2,16 @@
   <Row>
     <Col :cols="8">
       <TextField
+        v-if="modelValue && validations"
         :label="`Item value #${Number(index) + 1}`"
         v-model="modelValue.val"
-        @change="validations.c.val.touch()"
+        @change="validations?.c.val.touch()"
         :error-message="validations.c.val.dirtyMessage"
       />
+      <TextField v-else :label="`Item value #${Number(index) + 1}`" readonly />
     </Col>
     <Col :cols="4" class="flex justify-end align-center">
-      <PushButton :disabled="!removalAllowed" @click="$emit('remove')">Remove value</PushButton>
+      <PushButton :disabled="!removalAllowed || !modelValue || !validations" @click="$emit('remove')">Remove value</PushButton>
     </Col>
   </Row>
 </template>
@@ -35,14 +37,8 @@ export default defineComponent({
   },
 
   props: {
-    modelValue: {
-      type: Object as PropType<Data>,
-      required: true
-    },
-    validations: {
-      type: Object as PropType<Validations>,
-      required: true
-    },
+    modelValue: Object as PropType<Data>,
+    validations: Object as PropType<Validations>,
     index: Number as PropType<number>,
     removalAllowed: Boolean as PropType<boolean>
   }

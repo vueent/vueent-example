@@ -6,58 +6,66 @@
     <Row>
       <Col :cols="12">
         <TextField
+          v-if="modelValue && validations"
           v-model="modelValue.email"
-          @change="validations.c.email.touch()"
+          @change="validations?.c.email.touch()"
           :error-message="validations.c.email.dirtyMessage"
           label="E-mail"
         />
+        <TextField v-else label="E-mail" readonly />
       </Col>
       <Col :cols="6">
         <TextField
+          v-if="modelValue && validations"
           v-model="modelValue.age"
-          @change="validations.c.age.touch()"
+          @change="validations?.c.age.touch()"
           :error-message="validations.c.age.dirtyMessage"
           label="Age"
         />
+        <TextField v-else label="Age" readonly />
       </Col>
       <Col :cols="6">
         <TextField
+          v-if="modelValue && validations"
           v-model="modelValue.phone"
-          @change="validations.c.phone.touch()"
+          @change="validations?.c.phone.touch()"
           :error-message="validations.c.phone.dirtyMessage"
           label="Main phone"
         />
+        <TextField v-else label="Main phone" readonly />
       </Col>
-      <Col :cols="12" :class="validations.c.phones.dirty && validations.c.phones.selfInvalid ? 'color_error' : ''">
-        Phones count: {{ modelValue.phones.length }}
+      <Col :cols="12" :class="validations?.c.phones.dirty && validations.c.phones.selfInvalid ? 'color_error' : ''">
+        Phones count: {{ modelValue ? modelValue.phones.length : 0 }}
       </Col>
-      <Col :cols="12" v-for="(phone, index) in modelValue.phones" :key="index">
+      <Col v-if="modelValue" :cols="12" v-for="(phone, index) in modelValue.phones" :key="index">
         <TextField
+          v-if="modelValue && validations"
           :label="`Phone #${index + 1}`"
           :model-value="phone"
-          @update:model-value="modelValue.phones[index] = $event"
-          @change="validations.c.phones.c[index].touch()"
+          @update:model-value="modelValue ? (modelValue.phones[index] = $event) : null"
+          @change="validations?.c.phones.c[index].touch()"
           :error-message="validations.c.phones.c[index].dirtyMessage"
         />
+        <TextField v-else :label="`Phone #${index + 1}`" readonly />
       </Col>
       <Col :cols="12" class="flex justify-end">
-        <PushButton @click="addPhone">Add phone</PushButton>
-        <PushButton :disabled="!modelValue.phones.length" class="ml_1" @click="removeLastPhone">Remove last phone</PushButton>
+        <PushButton :disabled="!modelValue" @click="addPhone">Add phone</PushButton>
+        <PushButton :disabled="!modelValue?.phones.length" class="ml_1" @click="removeLastPhone">Remove last phone</PushButton>
       </Col>
       <Col :cols="12" unpadded>
-        <Credentials :model-value="modelValue.credentials" :validations="validations.c.credentials" />
+        <Credentials :model-value="modelValue?.credentials" :validations="validations?.c.credentials" />
       </Col>
-      <Col :cols="12">Documents count: {{ modelValue.documents.length }}</Col>
-      <Col :cols="12" v-for="(doc, index) in modelValue.documents" :key="doc.fakeId" unpadded>
-        <Document :modelValue="doc" :validations="validations.c.documents.c[index]" @remove="removeDocument(doc.fakeId)" />
+      <Col :cols="12">Documents count: {{ modelValue ? modelValue.documents.length : 0 }}</Col>
+      <Col :cols="12" v-for="(doc, index) in modelValue?.documents" :key="doc.fakeId" unpadded>
+        <Document :modelValue="doc" :validations="validations?.c.documents.c[index]" @remove="removeDocument(doc.fakeId)" />
       </Col>
       <Col :cols="12" class="flex justify-end">
         <PushButton @click="addDocument">Add document</PushButton>
       </Col>
-      <Col :cols="12" v-for="(item, index) in modelValue.items" :key="item.fakeId" unpadded>
+      <Col :cols="12" v-for="(item, index) in modelValue?.items" :key="item.fakeId" unpadded>
         <Item
           :modelValue="item"
-          :validations="validations.c.items.c[index]"
+          :validations="validations?.c.items.c[index]"
           @remove="removeItem(item.fakeId)"
           @add-value="addItemValue(item)"
           @remove-value="removeItemValue(item, $event)"
@@ -109,14 +117,8 @@ export default defineComponent({
   },
 
   props: {
-    modelValue: {
-      type: Object as PropType<Data>,
-      required: true
-    },
-    validations: {
-      type: Object as PropType<Validations>,
-      required: true
-    },
+    modelValue: Object as PropType<Data>,
+    validations: Object as PropType<Validations>,
     errorMessage: String as PropType<string>,
     successMessage: String as PropType<string>
   },

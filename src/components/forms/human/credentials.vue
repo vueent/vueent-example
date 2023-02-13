@@ -8,6 +8,7 @@
         @change="validations?.c.first.touch()"
         :error-message="validations?.c.first.dirtyMessage"
       />
+      <TextField v-else label="First name" readonly />
     </Col>
     <Col :cols="12">
       <TextField
@@ -17,6 +18,7 @@
         @change="validations?.c.second.touch()"
         :error-message="validations?.c.second.dirtyMessage"
       />
+      <TextField v-else label="econd name" readonly />
     </Col>
     <Col :cols="12">
       <TextField
@@ -26,6 +28,7 @@
         @change="validations?.c.last.touch()"
         :error-message="validations?.c.last.dirtyMessage"
       />
+      <TextField v-else label="Last name" readonly />
     </Col>
   </Row>
 </template>
@@ -50,14 +53,8 @@ export default defineComponent({
   },
 
   props: {
-    modelValue: {
-      type: Object as PropType<Data>,
-      required: true
-    },
-    validations: {
-      type: Object as PropType<Validations>,
-      required: true
-    }
+    modelValue: Object as PropType<Data>,
+    validations: Object as PropType<Validations>
   }
 });
 </script>

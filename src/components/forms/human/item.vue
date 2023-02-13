@@ -1,18 +1,18 @@
 <template>
   <Row>
-    <Col :cols="12">Values count: {{ modelValue.values.length }}</Col>
-    <Col :cols="12" v-for="(value, index) in modelValue.values" :key="value.fakeId" unpadded>
+    <Col :cols="12">Values count: {{ modelValue ? modelValue.values.length : 0 }}</Col>
+    <Col :cols="12" v-for="(value, index) in modelValue?.values" :key="value.fakeId" unpadded>
       <ItemValue
-        v-model="modelValue.values[index]"
-        :validations="validations.c.values.c[index]"
+        :modelValue="modelValue?.values[index]"
+        :validations="validations?.c.values.c[index]"
         :index="index"
         @remove="$emit('remove-value', value.fakeId)"
-        :removal-allowed="modelValue.values.length > 1"
+        :removal-allowed="Number(modelValue?.values.length) > 1"
       />
     </Col>
     <Col :cols="12" class="flex justify-end">
-      <PushButton :disabled="!removalAllowed" @click="$emit('remove')">Remove</PushButton>
-      <PushButton @click="$emit('add-value')" class="ml_1">Add value</PushButton>
+      <PushButton :disabled="!removalAllowed || !modelValue || !validations" @click="$emit('remove')">Remove</PushButton>
+      <PushButton :disabled="!modelValue || !validations" @click="$emit('add-value')" class="ml_1">Add value</PushButton>
     </Col>
   </Row>
 </template>
@@ -41,15 +41,8 @@ export default defineComponent({
   },
 
   props: {
-    modelValue: {
-      type: Object as PropType<Data>,
-      required: true
-    },
-
-    validations: {
-      type: Object as PropType<Validations>,
-      required: true
-    },
+    modelValue: Object as PropType<Data>,
+    validations: Object as PropType<Validations>,
     removalAllowed: Boolean as PropType<boolean>
   }
 });

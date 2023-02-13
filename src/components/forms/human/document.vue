@@ -2,22 +2,26 @@
   <Row>
     <Col :cols="12">
       <TextField
+        v-if="modelValue && validations"
         label="Document ID"
         v-model="modelValue.id"
-        @change="validations.c.id.touch()"
+        @change="validations?.c.id.touch()"
         :error-message="validations.c.id.dirtyMessage"
       />
+      <TextField v-else label="Document ID" readonly />
     </Col>
     <Col :cols="12">
       <TextField
+        v-if="modelValue && validations"
         label="Document filename"
         v-model="modelValue.filename"
-        @change="validations.c.filename.touch()"
+        @change="validations?.c.filename.touch()"
         :error-message="validations.c.filename.dirtyMessage"
       />
+      <TextField v-else label="Document filename" readonly />
     </Col>
     <Col :cols="12" class="flex justify-end">
-      <PushButton @click="$emit('remove')">Remove</PushButton>
+      <PushButton :disabled="!modelValue || !validations" @click="$emit('remove')">Remove</PushButton>
     </Col>
   </Row>
 </template>
@@ -43,14 +47,8 @@ export default defineComponent({
   },
 
   props: {
-    modelValue: {
-      type: Object as PropType<Data>,
-      required: true
-    },
-    validations: {
-      type: Object as PropType<Validations>,
-      required: true
-    }
+    modelValue: Object as PropType<Data>,
+    validations: Object as PropType<Validations>
   }
 });
 </script>
