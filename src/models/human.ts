@@ -222,7 +222,7 @@ export class Model extends mix<Data, typeof DataModel>(
     if (this.pk) this._flags.new = false;
   }
 
-  // состояние валидации будет автоматически сброшено после сохранения модели
+  // validation state will be resetted automatically after the model saving
   afterSave(): void {
     this.v.reset();
   }
