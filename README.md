@@ -1,6 +1,6 @@
 # vueent-example
 
-[VueenT](https://github.com/vueent/vueent) project example.
+[VueEnt](https://github.com/vueent/vueent) project example.
 
 ## Recommended IDE Setup
 
