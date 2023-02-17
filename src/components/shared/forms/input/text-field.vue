@@ -51,7 +51,7 @@ export default defineComponent({
     input {
       font-size: 1.1rem;
       outline: none;
-      border: 1px solid #303030;
+      border: 1px solid rgba(60, 60, 60, 0.12);
       border-radius: 10px;
       background-color: #ffffff;
       box-shadow: none;
@@ -62,7 +62,7 @@ export default defineComponent({
         outline: none;
         color: #2f2d47;
         border: 1px solid #2f2d47;
-        background-color: hsla(245, 22%, 23%, 0.1);
+        background-color: hsl(246, 16%, 75%);
         box-shadow: none;
       }
     }
