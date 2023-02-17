@@ -4,16 +4,10 @@ import type {
   RollbackPrivate,
   Save,
   SavePrivate,
-  SaveOptions,
   Validate,
   ValidatePrivate,
-  ValidationBase,
-  ValidateOptions,
   Options,
-  PatternAssert,
-  CreateFunc,
-  UpdateFunc,
-  DestroyFunc
+  PatternAssert
 } from '@vueent/mix-models';
 import { BaseModel, mixRollback, mixSave, mixValidate, mix } from '@vueent/mix-models';
 import { v9s, simplify } from 'v9s';
@@ -226,28 +220,4 @@ export class Model extends mix<Data, typeof DataModel>(
   afterSave(): void {
     this.v.reset();
   }
-}
-
-export function create(
-  initialData?: Data,
-  react = true,
-  params: {
-    validations?: ValidationBase;
-    create?: CreateFunc<Data>;
-    update?: UpdateFunc<Data>;
-    destroy?: DestroyFunc<Data>;
-  } = {}
-): ModelType {
-  const options: Array<ValidateOptions | SaveOptions<Data>> = [];
-
-  if (params.validations) options.push({ mixinType: 'validate', validations: params.validations });
-  if (params.create || params.update || params.destroy)
-    options.push({
-      mixinType: 'save',
-      create: params.create,
-      update: params.update,
-      destroy: params.destroy
-    });
-
-  return new Model(initialData, react, ...options);
 }
